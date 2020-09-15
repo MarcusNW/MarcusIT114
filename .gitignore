@@ -1,5 +1,5 @@
 dektop.ini 
-myprivatecreds.
+myprivatecreds.*
 *.log 
 .idea/* 
 
