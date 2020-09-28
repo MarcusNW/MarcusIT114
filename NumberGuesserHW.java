@@ -41,15 +41,8 @@ public class NumberGuesserHW {
 
 	private void lose() {
 		System.out.println("Uh oh, looks like you need to get some more practice.");
-		System.out.println("The correct number was " + number);
-		//strikes = 0;
-		level--;
-		if (level < 1) {
-			level = 1;
-		}
-		saveLevel();
-		number = getNumber(level); 
-      isRunning = false;
+		System.out.println("The correct number was " + number); 
+      System.exit(0);
 	}
 
 	private void processCommands(String message) {
