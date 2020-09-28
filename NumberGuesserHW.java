@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class NumberGuesserHW {
 	private int level = 1;
 	private int strikes = 0;
-	private int maxStrikes = 20;
+   private int maxStrikes;
 	private int correctguess = 0;
    private int number = 0;
 	private boolean isRunning = false;
@@ -121,7 +121,9 @@ public class NumberGuesserHW {
 
 	void run() {
 		try (Scanner input = new Scanner(System.in);) {
-			System.out.println("Welcome to Number Guesser HW!");
+			System.out.println("Welcome to Number Guesser HW!"); 
+         System.out.println("How many guesses will you make?"); 
+         maxStrikes = input.nextInt();
 			System.out.println("I'll ask you to guess a number between a range, and you'll have " + maxStrikes
 					+ " attempts to guess and move through the levels."); 
 			if (loadLevel()) {
