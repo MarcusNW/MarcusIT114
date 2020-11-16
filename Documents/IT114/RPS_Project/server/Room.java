@@ -142,6 +142,20 @@ public class Room implements AutoCloseable {
 		log.log(Level.INFO, "Removed client " + c.getId());
 	    }
 	}
+    } 
+    
+    private void checkStatus() { 
+      Iterator<ServerThread> iter = clients.iterator(); 
+      int madeChoice = 0;
+	while (iter.hasNext()) {
+	    ServerThread c = iter.next(); 
+       if (c.mademyChoice()) { 
+         madeChoice++;
+       }
+   	} 
+      if (madeChoice == client.size()) { 
+         log.log("ready to start game"); 
+      }
     }
 
     /***
@@ -151,13 +165,24 @@ public class Room implements AutoCloseable {
      * 
      * @param sender  The client sending the message
      * @param message The message to broadcast inside the room
-     */
+     */ 
+     
     protected void sendMessage(ServerThread sender, String message) {
 	log.log(Level.INFO, getName() + ": Sending message to " + clients.size() + " clients");
 	if (processCommands(message, sender)) {
 	    // it was a command, don't broadcast
 	    return;
-	}
+	} 
+   if (message.equals("R") || message.equals("P") || message.equals("S")) {  
+      if (!sender.mademyChoice()) { 
+         sender.setmyChoice(message);  
+         checkStatus();
+         message = sender.getClientName() + " made a selection ";  
+      } 
+      else { 
+         return;
+      } 
+   }
 	Iterator<ServerThread> iter = clients.iterator();
 	while (iter.hasNext()) {
 	    ServerThread client = iter.next();
