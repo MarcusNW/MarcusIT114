@@ -1,5 +1,6 @@
 package server;
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -155,6 +156,11 @@ public class Room implements AutoCloseable {
    	} 
       if (madeChoice == client.size()) { 
          log.log("ready to start game"); 
+         Random rand = new Random();
+         for (i = 0; i < client.size(); i++) {
+         int int_random = rand.nextInt(client.size()); 
+         client.add(int_random); 
+         }
       }
     }
 
