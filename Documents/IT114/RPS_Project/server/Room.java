@@ -148,19 +148,32 @@ public class Room implements AutoCloseable {
     private void checkStatus() { 
       Iterator<ServerThread> iter = clients.iterator(); 
       int madeChoice = 0;
+      int players = 0;
 	while (iter.hasNext()) {
 	    ServerThread c = iter.next(); 
-       if (c.mademyChoice()) { 
-         madeChoice++;
+       if (c.IsPlaying) { 
+         players++; 
+         if (client.message == "R") { 
+            c.myChoice = 0; 
+            } 
+         if (client.message == "P") { 
+            c.myChoice = 1; 
+            } 
+         if (client.message == "S") { 
+            c.myChoice = 2; 
+            }
        }
-   	} 
-      if (madeChoice == client.size()) { 
+   	}  
+    }
+      if (client.myChoice > -1) {  
+         ready++;
          log.log("ready to start game"); 
-         Random rand = new Random();
-         for (i = 0; i < client.size(); i++) {
-         int int_random = rand.nextInt(client.size()); 
-         client.add(int_random); 
-         }
+         } 
+      if (ready >= players) { 
+         for (int i = 0; i < clients.size(); i+2) {
+            Client a = clients.get(i); 
+            Client b = client.get(i+1); 
+            winner = compare(a,b);
       }
     }
 
@@ -189,6 +202,18 @@ public class Room implements AutoCloseable {
          return;
       } 
    }
+   
+   int checkMatch(int choice1, int choice2) { 
+      if (choice1 == choice2) { 
+         return 0; //tie
+      } 
+      if ((choice1 - choice2 + 3) % 3 == 1) { 
+         return 1; //win 
+      } 
+      else { 
+         return -1; //lose
+      } 
+   } 
 	Iterator<ServerThread> iter = clients.iterator();
 	while (iter.hasNext()) {
 	    ServerThread client = iter.next();

@@ -15,13 +15,14 @@ public class ServerThread extends Thread {
     private Room currentRoom;// what room we are in, should be lobby by default
     private String clientName;
     private final static Logger log = Logger.getLogger(ServerThread.class.getName()); 
-    private String myChoice = "";
+    private int myChoice = -1;
+    private boolean IsPlaying = true;
 
-    public void setmyChoice(String message) { 
+    public void setmyChoice(int message) { 
       myChoice = message; 
     } 
     
-    public String getmyChoice() { 
+    public int getmyChoice() { 
       return myChoice; 
     } 
     
